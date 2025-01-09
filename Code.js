@@ -260,6 +260,18 @@ Suasana Cerita: [ceria/petualangan/lucu/dll]
 </topik_cerita>
 `;
 
+  // Insert Story Template
+  const responseTemplate = `
+<input_RPPH>
+</input_RPPH>
+<activity_detail>
+</activity_detail>
+<assessment_guide>
+</assessment_guide>
+<story>
+</story>
+`;
+
   // Function to insert a template with formatting
   const insertTemplateWithFormatting = (template, tag) => {
     const startTag = `<${tag}>`;
@@ -296,9 +308,28 @@ Suasana Cerita: [ceria/petualangan/lucu/dll]
     body.appendParagraph('');
   };
 
+  // Function to insert tags with spacing
+  const insertTagsWithSpacing = () => {
+    const tags = ['<rpph>', '</rpph>', '<activity_detail>', '</activity_detail>', '<assessment_guide>', '</assessment_guide>', '<story>', '</story>'];
+
+    // Insert each tag with spacing
+    tags.forEach((tag, index) => {
+      const paragraph = body.appendParagraph(tag);
+      paragraph.setHeading(DocumentApp.ParagraphHeading.NORMAL);
+
+      // Add spacing after each tag
+      if (index < tags.length - 1) {
+        body.appendParagraph('');
+      }
+    });
+  };
+
   // Insert all templates with formatting
   insertTemplateWithFormatting(rpphTemplate, 'input_RPPH');
   insertTemplateWithFormatting(activityDetailTemplate, 'input_Activity_Detail');
   insertTemplateWithFormatting(assessmentTemplate, 'input_Assessment');
   insertTemplateWithFormatting(storyTemplate, 'topik_cerita');
+
+  // Insert the additional tags with spacing
+  insertTagsWithSpacing();
 }

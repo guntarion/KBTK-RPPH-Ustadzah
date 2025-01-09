@@ -122,7 +122,7 @@ class Anthropic {
         },
       };
 
-      console.log('Final processed result:', result);
+      // console.log('Final processed result:', result);
       return result;
     } catch (error) {
       console.error('Error in callAnthropicAPI:', error);

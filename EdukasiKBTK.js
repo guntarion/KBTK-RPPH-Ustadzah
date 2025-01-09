@@ -11,7 +11,7 @@ class Edukasi {
         outputConfig: {
           headerText: 'RPPH - KBTK Al Muhajirin',
           headerEmoji: '📍📤',
-          xmlTags: 'input_RPPH',
+          xmlTags: 'rpph',
         },
       },
 
@@ -258,7 +258,19 @@ class Edukasi {
      - Modifikasi kegiatan
      - Alternatif kegiatan
 
-  Berikan dalam format yang praktis dan mudah dipahami oleh guru PAUD.`;
+  Berikan dalam format yang praktis dan mudah dipahami oleh guru PAUD.
+  
+  PETUNJUK PENTING FORMAT PENULISAN:
+  1. Gunakan tanda '# ' untuk judul utama (Heading 5).
+  2. Gunakan tanda '## ' untuk sub-judul (Bold text).
+  3. Gunakan tanda '* ' untuk tingkat pertama dalam daftar (Bullet list, nesting level 0).
+  4. Gunakan tanda '• ' untuk tingkat kedua dalam daftar (Bullet list, nesting level 1).
+  5. Gunakan huruf 'a., b., c.' untuk tingkat ketiga dalam daftar (Bullet list, nesting level 2).
+  6. Gunakan huruf 'i., ii., iii.' untuk tingkat keempat dalam daftar (Bullet list, nesting level 3).
+  7. Gunakan tanda '-' untuk bullet point biasa (Bullet list, nesting level 0).
+  8. Biarkan baris kosong untuk membuat paragraf baru.
+  
+  `;
 
     return this.anthropic.callAnthropicAPI(prompt);
   }

@@ -65,7 +65,7 @@ class DocumentFormatter {
   }
 
   _formatAtPosition(body, content, endParaIndex, options) {
-    const { headerText = '✨ ', headerEmoji = '✨' } = options;
+    const { headerText = '✨ SANTAPAN INOVASI', headerEmoji = '✨' } = options;
 
     const newPosition = endParaIndex + 1;
 
@@ -112,28 +112,26 @@ class DocumentFormatter {
         processedText = trimmedLine.substring(hashLength + 1);
       }
 
-      // Check for all types of bullet points and nesting indicators
-      if (processedText.startsWith('•') || processedText.startsWith('*') || processedText.match(/^[a-z]\./) || processedText.match(/^[i]+\./)) {
+      // Handle bullet points and nesting
+      if (processedText.startsWith('* ') || processedText.startsWith('• ') || processedText.match(/^[a-z]\. /) || processedText.match(/^[i]+\. /)) {
         let bulletText = processedText;
 
-        // Handle different bullet point types
-        if (processedText.startsWith('•')) {
-          bulletText = processedText.substring(1).trim();
-          currentNestingLevel = 0;
-        } else if (processedText.startsWith('*')) {
-          bulletText = processedText.substring(1).trim();
-          currentNestingLevel = 1;
-        } else if (processedText.match(/^[a-z]\./)) {
-          // For a., b., c. etc.
+        // Determine nesting level based on bullet type
+        if (processedText.startsWith('* ')) {
           bulletText = processedText.substring(2).trim();
-          currentNestingLevel = 1;
-        } else if (processedText.match(/^[i]+\./)) {
-          // For i., ii., iii. etc.
+          currentNestingLevel = 0; // First level
+        } else if (processedText.startsWith('• ')) {
+          bulletText = processedText.substring(2).trim();
+          currentNestingLevel = 1; // Second level
+        } else if (processedText.match(/^[a-z]\. /)) {
+          bulletText = processedText.substring(3).trim();
+          currentNestingLevel = 2; // Third level
+        } else if (processedText.match(/^[i]+\. /)) {
           bulletText = processedText.substring(processedText.indexOf('.') + 1).trim();
-          currentNestingLevel = 2;
+          currentNestingLevel = 3; // Fourth level
         }
 
-        // Create or continue list
+        // Insert list item with proper nesting
         lastListItem = body.insertListItem(insertPosition, bulletText);
         lastListItem.setGlyphType(DocumentApp.GlyphType.BULLET);
         lastListItem.setNestingLevel(currentNestingLevel);
@@ -146,12 +144,12 @@ class DocumentFormatter {
         });
       }
       // Handle regular dash bullet points
-      else if (processedText.startsWith('-')) {
-        const bulletText = processedText.substring(1).trim();
+      else if (processedText.startsWith('- ')) {
+        const bulletText = processedText.substring(2).trim();
 
         lastListItem = body.insertListItem(insertPosition, bulletText);
         lastListItem.setGlyphType(DocumentApp.GlyphType.BULLET);
-        lastListItem.setNestingLevel(currentNestingLevel);
+        lastListItem.setNestingLevel(0); // Default nesting level
 
         lastListItem.setAttributes({
           [DocumentApp.Attribute.FONT_FAMILY]: 'Arial',
